@@ -24,7 +24,7 @@ function Categories() {
 
   useEffect(() => {
     getCategories();
-  }, [])
+  }, []);
 
   return (
     <div className="categories-container">

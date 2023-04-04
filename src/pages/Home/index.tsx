@@ -1,5 +1,5 @@
-import Categories from "../../components/categories";
-import Header from "../../components/header";
+import Categories from '../../components/categories';
+import Header from '../../components/header';
 
 function HomePage() {
   return (
@@ -7,7 +7,7 @@ function HomePage() {
       <Header />
       <Categories />
     </>
-  )
+  );
 }
 
 export default HomePage;
