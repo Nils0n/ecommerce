@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import CategoryItem from '../category-item';
+
 import CategoryType from '../../types/category.types';
 import api from '../../services/api';
 
@@ -27,7 +29,11 @@ function Categories() {
   return (
     <div className="categories-container">
       <div className="categories-content">
-
+        {categories.map(category =>
+          <div key={category.id}>
+            <CategoryItem category={category} />
+          </div>
+        )}
       </div>
     </div>
   );
