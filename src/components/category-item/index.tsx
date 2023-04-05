@@ -9,7 +9,8 @@ interface CategoryItemProps {
 function CategoryItem({ category }: CategoryItemProps) {
   return (
     <CategoryItemContainer
-      style={{ backgroundImage: `url('${category.imageUrl}')` }}>
+      backgroundImage={category.imageUrl}
+    >
       <CategoryName>
         <p>{category.displayName}</p>
         <p>Explorar</p>
