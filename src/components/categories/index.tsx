@@ -4,8 +4,8 @@ import CategoryItem from '../category-item';
 
 import CategoryType from '../../types/category.types';
 import api from '../../services/api';
+import { CategoriesContainer, CategoriesContent } from './styles';
 
-import './styles.css';
 
 function Categories() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -14,28 +14,25 @@ function Categories() {
     try {
       const { data } = await api.get('/category');
       setCategories(data);
-
     } catch (error) {
       console.log(error);
     }
   }
-
-
 
   useEffect(() => {
     getCategories();
   }, []);
 
   return (
-    <div className="categories-container">
-      <div className="categories-content">
+    <CategoriesContainer>
+      <CategoriesContent>
         {categories.map(category =>
           <div key={category.id}>
             <CategoryItem category={category} />
           </div>
         )}
-      </div>
-    </div>
+      </CategoriesContent>
+    </CategoriesContainer>
   );
 }
 

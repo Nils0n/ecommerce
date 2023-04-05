@@ -1,11 +1,13 @@
-.categories-container {
+import styled from 'styled-components';
+
+export const CategoriesContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
-}
+`;
 
-.categories-content {
+export const CategoriesContent = styled.div`
   height: 100%;
   width: 1920px;
   display: grid;
@@ -15,24 +17,25 @@
     "d e";
   grid-gap: 15px;
   padding: 30px;
-}
 
-.categories-content div:nth-child(1) {
+  div:nth-child(1) {
   grid-area: a;
 }
 
-.categories-content div:nth-child(2) {
+  div:nth-child(2) {
   grid-area: b;
 }
 
-.categories-content div:nth-child(3) {
+  div:nth-child(3) {
   grid-area: c;
 }
 
-.categories-content div:nth-child(4) {
+  div:nth-child(4) {
   grid-area: d;
 }
 
-.categories-content div:nth-child(5) {
+  div:nth-child(5) {
   grid-area: e;
 }
+
+`;
