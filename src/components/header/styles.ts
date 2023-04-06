@@ -3,7 +3,7 @@ import Colors from '../../theme/theme.colors';
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  background-color: ${Colors.backgroud.dark};
+  background-color: ${Colors.background.dark};
   display: flex;
   justify-content: space-between;
   padding: 20px;
