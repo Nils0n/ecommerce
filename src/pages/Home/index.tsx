@@ -1,5 +1,5 @@
-import Categories from '../../components/categories';
-import Header from '../../components/header';
+import Categories from '../../components/Categories';
+import Header from '../../components/Header';
 
 function HomePage() {
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import CategoryItem from '../category-item';
+import CategoryItem from '../CategoryItem';
 
 import CategoryType from '../../types/category.types';
 import api from '../../services/api';

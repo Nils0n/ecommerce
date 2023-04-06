@@ -1,8 +1,8 @@
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 
-import CustomButton from '../../components/custom-button';
-import Header from '../../components/header';
+import CustomButton from '../../components/CustomButton';
+import Header from '../../components/Header';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
 
