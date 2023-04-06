@@ -1,8 +1,11 @@
 import { BsCart3 } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './styles';
 
 
 function Header() {
+  const navigate = useNavigate();
+
   return (
     <HeaderContainer>
       <HeaderTitle>
@@ -12,7 +15,7 @@ function Header() {
         <HeaderItem>
           Explorar
         </HeaderItem>
-        <HeaderItem>
+        <HeaderItem onClick={() => navigate('/login')} >
           Login
         </HeaderItem>
         <HeaderItem>
