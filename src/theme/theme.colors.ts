@@ -4,7 +4,7 @@ const Colors = {
     white:'#F8F9FA',
     dark:'#343A40'
   },
-  backgroud:{
+  background:{
     dark:'#212529',
     white:'#F8F9FA',
   },
