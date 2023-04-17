@@ -8,7 +8,7 @@ function Header() {
 
   return (
     <HeaderContainer>
-      <HeaderTitle>
+      <HeaderTitle onClick={() => navigate('/')}>
         CLUB CLOTHING
       </HeaderTitle>
       <HeaderItems>
