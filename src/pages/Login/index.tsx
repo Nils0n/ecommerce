@@ -1,3 +1,6 @@
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
@@ -7,9 +10,25 @@ import CustomInput from '../../components/CustomInput';
 import Header from '../../components/Header';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
+import InputErrorMessage from '../../components/InputErrorMessage';
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Campo deve ser do tipo e-mail')
+    .required('Campo obrigatório'),
+  password: yup
+    .string()
+    .min(8, 'Campo deve possuir no mínimo 8 caracteres')
+    .required('Campo obrigatório')
+});
+
 
 function LoginPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    mode: 'onChange',
+    resolver: yupResolver(schema)
+  });
 
   function onSubmit(data: any) {
     console.log(data);
@@ -35,19 +54,25 @@ function LoginPage() {
           <LoginInputContainer>
             <p>E-mail</p>
             <CustomInput
-              {...register('email', { required: true })}
+              {...register('email')}
               placeholder='Digite seu e-mail'
               hasError={!!errors?.email}
             />
+
+            {errors?.email && <InputErrorMessage>{String(errors.email?.message)}</InputErrorMessage>}
+
           </LoginInputContainer>
 
           <LoginInputContainer>
             <p>Senha</p>
             <CustomInput
               placeholder='Digite sua senha'
-              {...register('password', { required: true })}
+              {...register('password')}
               hasError={!!errors?.password}
             />
+
+            {errors?.password && <InputErrorMessage>{String(errors.password?.message)}</InputErrorMessage>}
+
           </LoginInputContainer>
 
           <CustomButton
