@@ -33,7 +33,6 @@ function LoginPage() {
   function onSubmit(data: any) {
     console.log(data);
   }
-  console.log(errors);
 
   return (
     <>
