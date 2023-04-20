@@ -23,14 +23,18 @@ const schema = yup.object().shape({
     .required('Campo obrigatório')
 });
 
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 function LoginPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
 
-  function onSubmit(data: any) {
+  function onSubmit(data: LoginForm) {
     console.log(data);
   }
 
