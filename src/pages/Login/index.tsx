@@ -68,6 +68,7 @@ function LoginPage() {
               placeholder='Digite sua senha'
               {...register('password')}
               hasError={!!errors?.password}
+              type="password"
             />
 
             {errors?.password && <InputErrorMessage>{String(errors.password?.message)}</InputErrorMessage>}
