@@ -18,7 +18,7 @@ function Header() {
         <HeaderItem onClick={() => navigate('/login')} >
           Login
         </HeaderItem>
-        <HeaderItem>
+        <HeaderItem onClick={() => navigate('/sign-up')}>
           Cria Conta
         </HeaderItem>
         <HeaderItem>
