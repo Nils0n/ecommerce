@@ -12,7 +12,7 @@ import { SignUpContainer, SignUpHeadline, SignUpContent, SignUpInputContainer } 
 
 
 const schema = yup.object().shape({
-  name: yup
+  firstName: yup
     .string()
     .min(4, 'Campo deve possuir no mínimo 4 caracteres')
     .required('Campo obrigatório'),
@@ -35,7 +35,7 @@ const schema = yup.object().shape({
 });
 
 interface SignUpForm {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -64,12 +64,12 @@ function SignUpPage() {
           <SignUpInputContainer>
             <p>Nome</p>
             <CustomInput
-              {...register('name')}
+              {...register('firstName')}
               placeholder='Digite seu nome'
-              hasError={!!errors?.name}
+              hasError={!!errors?.firstName}
             />
 
-            {errors?.name && <InputErrorMessage>{String(errors.name?.message)}</InputErrorMessage>}
+            {errors?.firstName && <InputErrorMessage>{String(errors.firstName?.message)}</InputErrorMessage>}
 
           </SignUpInputContainer>
 
