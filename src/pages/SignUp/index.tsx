@@ -2,6 +2,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { FiLogIn } from 'react-icons/fi';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -10,6 +12,7 @@ import InputErrorMessage from '../../components/InputErrorMessage';
 
 import { SignUpContainer, SignUpHeadline, SignUpContent, SignUpInputContainer } from './styles';
 
+import { auth, db } from '../../config/firebase.config';
 
 const schema = yup.object().shape({
   firstName: yup
@@ -48,8 +51,21 @@ function SignUpPage() {
     resolver: yupResolver(schema)
   });
 
-  function onSubmit(data: SignUpForm) {
-    console.log(data);
+  async function onSubmit(data: SignUpForm) {
+    try {
+
+      const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password);
+
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: userCredentials.user.email
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
