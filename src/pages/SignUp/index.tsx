@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { FiLogIn } from 'react-icons/fi';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, AuthErrorCodes, AuthError } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 
 import CustomButton from '../../components/CustomButton';
@@ -17,23 +17,23 @@ import { auth, db } from '../../config/firebase.config';
 const schema = yup.object().shape({
   firstName: yup
     .string()
-    .min(4, 'Campo deve possuir no mínimo 4 caracteres')
+    .min(4, 'Campo deve possuir no mínimo 4 caracteres.')
     .required('Campo obrigatório'),
   lastName: yup
     .string()
-    .min(4, 'Campo deve possuir no mínimo 4 caracteres')
+    .min(4, 'Campo deve possuir no mínimo 4 caracteres.')
     .required('Campo obrigatório'),
   email: yup
     .string()
-    .email('Campo deve ser do tipo e-mail')
+    .email('Campo deve ser do tipo e-mail.')
     .required('Campo obrigatório'),
   password: yup
     .string()
-    .min(8, 'Campo deve possuir no mínimo 8 caracteres')
+    .min(8, 'Campo deve possuir no mínimo 8 caracteres.')
     .required('Campo obrigatório'),
   confirmationPassword: yup
     .string()
-    .oneOf([yup.ref('password')], 'Senhas não conferem')
+    .oneOf([yup.ref('password')], 'Senhas não conferem.')
     .required('Campo obrigatório')
 });
 
@@ -46,7 +46,7 @@ interface SignUpForm {
 }
 
 function SignUpPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm<SignUpForm>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<SignUpForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
@@ -65,6 +65,11 @@ function SignUpPage() {
 
     } catch (error) {
       console.log(error);
+      const _error = error as AuthError;
+
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        return setError('email', { message: 'Este e-mail já está sendo utilizado.' });
+      }
     }
   }
 
