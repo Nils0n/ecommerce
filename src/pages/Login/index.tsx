@@ -38,8 +38,7 @@ function LoginPage() {
 
   async function onSubmit(data: LoginForm) {
     try {
-      const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
-      console.log(userCredentials);
+      await signInWithEmailAndPassword(auth, data.email, data.password);
 
     } catch (error) {
       console.log(error);
