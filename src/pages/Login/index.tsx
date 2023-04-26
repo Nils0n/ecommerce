@@ -11,6 +11,8 @@ import Header from '../../components/Header';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
 import InputErrorMessage from '../../components/InputErrorMessage';
+import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../config/firebase.config';
 
 const schema = yup.object().shape({
   email: yup
@@ -29,13 +31,30 @@ interface LoginForm {
 }
 
 function LoginPage() {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<LoginForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
 
-  function onSubmit(data: LoginForm) {
-    console.log(data);
+  async function onSubmit(data: LoginForm) {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(auth, data.email, data.password);
+      console.log(userCredentials);
+
+    } catch (error) {
+      console.log(error);
+      const _error = error as AuthError;
+
+      switch (_error.code) {
+        case AuthErrorCodes.USER_DELETED:
+          setError('email', { message: 'E-mail não cadastrado' });
+          break;
+
+        case AuthErrorCodes.INVALID_PASSWORD:
+          setError('password', { message: 'Senha inválida' });
+          break;
+      }
+    }
   }
 
   return (
