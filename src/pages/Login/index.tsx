@@ -26,18 +26,18 @@ const schema = yup.object().shape({
     .required('Campo obrigatório')
 });
 
-interface LoginForm {
+interface ILoginForm {
   email: string;
   password: string;
 }
 
 function LoginPage() {
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<LoginForm>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<ILoginForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
 
-  async function onSubmit(data: LoginForm) {
+  async function onSubmit(data: ILoginForm) {
     try {
       await signInWithEmailAndPassword(auth, data.email, data.password);
 

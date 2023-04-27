@@ -37,7 +37,7 @@ const schema = yup.object().shape({
     .required('Campo obrigatório')
 });
 
-interface SignUpForm {
+interface ISignUpForm {
   firstName: string;
   lastName: string;
   email: string;
@@ -46,12 +46,12 @@ interface SignUpForm {
 }
 
 function SignUpPage() {
-  const { register, handleSubmit, setError, formState: { errors } } = useForm<SignUpForm>({
+  const { register, handleSubmit, setError, formState: { errors } } = useForm<ISignUpForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
   });
 
-  async function onSubmit(data: SignUpForm) {
+  async function onSubmit(data: ISignUpForm) {
     try {
 
       const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password);

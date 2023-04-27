@@ -1,6 +1,6 @@
 import ProductType from './product.types';
 
-interface CategoryType{
+interface ICategoryType{
   id:string;
   name:string;
   displayName:string;
@@ -8,4 +8,4 @@ interface CategoryType{
   products:ProductType[];
 }
 
-export default CategoryType;
+export default ICategoryType;
