@@ -11,8 +11,9 @@ import Header from '../../components/Header';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
 import InputErrorMessage from '../../components/InputErrorMessage';
-import { AuthError, AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../config/firebase.config';
+import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, db, googleProvider } from '../../config/firebase.config';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 const schema = yup.object().shape({
   email: yup
@@ -56,6 +57,33 @@ function LoginPage() {
     }
   }
 
+  async function handleSignInWithGoogle() {
+    try {
+      const userCredentials = await signInWithPopup(auth, googleProvider);
+
+      const querySnapShot = await getDocs(query(collection(db, 'users'), where('id', '==', userCredentials.user.uid)))
+
+      const user = querySnapShot.docs[0]?.data();
+
+      if (!user) {
+        const firstName = userCredentials.user.displayName?.split(' ')[0];
+        const lastName = userCredentials.user.displayName?.split(' ')[1];
+
+        await addDoc(collection(db, 'users'), {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+          firstName,
+          lastName,
+          provider: 'google'
+        });
+      }
+
+    } catch (error) {
+
+    }
+  }
+
+
   return (
     <>
       <Header />
@@ -66,6 +94,7 @@ function LoginPage() {
 
           <CustomButton
             startIcon={<BsGoogle size={18} />}
+            onClick={handleSignInWithGoogle}
           >
             Entra com o Google
           </CustomButton>
