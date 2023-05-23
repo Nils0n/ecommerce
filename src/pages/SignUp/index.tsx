@@ -2,6 +2,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { FiLogIn } from 'react-icons/fi';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, AuthErrorCodes, AuthError } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 
@@ -13,6 +15,7 @@ import InputErrorMessage from '../../components/InputErrorMessage';
 import { SignUpContainer, SignUpHeadline, SignUpContent, SignUpInputContainer } from './styles';
 
 import { auth, db } from '../../config/firebase.config';
+import { UserContext } from '../../contexts/UserContext';
 
 const schema = yup.object().shape({
   firstName: yup
@@ -46,6 +49,8 @@ interface ISignUpForm {
 }
 
 function SignUpPage() {
+  const { isAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors } } = useForm<ISignUpForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
@@ -73,6 +78,12 @@ function SignUpPage() {
       }
     }
   }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated])
 
   return (
     <>

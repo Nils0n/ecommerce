@@ -4,6 +4,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
@@ -14,6 +16,7 @@ import InputErrorMessage from '../../components/InputErrorMessage';
 import { AuthError, AuthErrorCodes, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth, db, googleProvider } from '../../config/firebase.config';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { UserContext } from '../../contexts/UserContext';
 
 const schema = yup.object().shape({
   email: yup
@@ -31,7 +34,10 @@ interface ILoginForm {
   password: string;
 }
 
+
 function LoginPage() {
+  const { isAuthenticated } = useContext(UserContext);
+  const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors } } = useForm<ILoginForm>({
     mode: 'onChange',
     resolver: yupResolver(schema)
@@ -83,6 +89,11 @@ function LoginPage() {
     }
   }
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated])
 
   return (
     <>
