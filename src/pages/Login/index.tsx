@@ -4,12 +4,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
 import InputErrorMessage from '../../components/InputErrorMessage';
@@ -37,6 +38,7 @@ interface ILoginForm {
 
 function LoginPage() {
   const { isAuthenticated } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors } } = useForm<ILoginForm>({
     mode: 'onChange',
@@ -45,6 +47,7 @@ function LoginPage() {
 
   async function onSubmit(data: ILoginForm) {
     try {
+      setIsLoading(true);
       await signInWithEmailAndPassword(auth, data.email, data.password);
 
     } catch (error) {
@@ -60,14 +63,17 @@ function LoginPage() {
           setError('password', { message: 'Senha inválida' });
           break;
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
   async function handleSignInWithGoogle() {
     try {
+      setIsLoading(true);
       const userCredentials = await signInWithPopup(auth, googleProvider);
 
-      const querySnapShot = await getDocs(query(collection(db, 'users'), where('id', '==', userCredentials.user.uid)))
+      const querySnapShot = await getDocs(query(collection(db, 'users'), where('id', '==', userCredentials.user.uid)));
 
       const user = querySnapShot.docs[0]?.data();
 
@@ -85,7 +91,9 @@ function LoginPage() {
       }
 
     } catch (error) {
-
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -93,11 +101,12 @@ function LoginPage() {
     if (isAuthenticated) {
       navigate('/');
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated]);
 
   return (
     <>
       <Header />
+      {isLoading && <Loading />}
       <LoginContainer>
         <LoginContent>
 
