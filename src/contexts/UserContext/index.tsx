@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useState } from 'react';
 import IUserType from '../../types/user.types';
 
 
@@ -41,7 +41,7 @@ function UserContextProvider({ children }: IUserContextProviderProps) {
     <UserContext.Provider value={{ currentUser, isAuthenticated, loginUser, logoutUser }}>
       {children}
     </UserContext.Provider>
-  )
+  );
 }
 
 export default UserContextProvider;

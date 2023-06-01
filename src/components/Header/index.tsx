@@ -9,7 +9,7 @@ import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './styles'
 
 function Header() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(UserContext)
+  const { isAuthenticated } = useContext(UserContext);
 
   return (
     <HeaderContainer>
