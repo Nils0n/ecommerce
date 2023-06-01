@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { FiLogIn } from 'react-icons/fi';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, AuthErrorCodes, AuthError } from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
@@ -11,6 +11,7 @@ import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
 import Header from '../../components/Header';
 import InputErrorMessage from '../../components/InputErrorMessage';
+import Loading from '../../components/Loading';
 
 import { SignUpContainer, SignUpHeadline, SignUpContent, SignUpInputContainer } from './styles';
 
@@ -50,6 +51,8 @@ interface ISignUpForm {
 
 function SignUpPage() {
   const { isAuthenticated } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const { register, handleSubmit, setError, formState: { errors } } = useForm<ISignUpForm>({
     mode: 'onChange',
@@ -58,6 +61,7 @@ function SignUpPage() {
 
   async function onSubmit(data: ISignUpForm) {
     try {
+      setIsLoading(true);
 
       const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password);
 
@@ -76,6 +80,8 @@ function SignUpPage() {
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
         return setError('email', { message: 'Este e-mail já está sendo utilizado.' });
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -83,12 +89,12 @@ function SignUpPage() {
     if (isAuthenticated) {
       navigate('/');
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated]);
 
   return (
     <>
       <Header />
-
+      {isLoading && <Loading />}
       <SignUpContainer>
         <SignUpContent>
 
