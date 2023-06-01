@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, ReactNode, useState } from 'react';
 import IUserType from '../../types/user.types';
 
