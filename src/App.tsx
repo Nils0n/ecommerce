@@ -6,6 +6,7 @@ import Loading from './components/Loading';
 import { auth, db } from './config/firebase.config';
 import { UserContext } from './contexts/UserContext';
 import { UserConverter } from './converts/firestore.converts';
+import Explore from './pages/Explore';
 
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
@@ -48,6 +49,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/sign-up' element={<SignUpPage />} />
+        <Route path='/explore' element={<Explore />} />
       </Routes>
     </BrowserRouter>
   );

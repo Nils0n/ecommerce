@@ -17,7 +17,7 @@ function Header() {
         CLUB CLOTHING
       </HeaderTitle>
       <HeaderItems>
-        <HeaderItem>
+        <HeaderItem onClick={() => navigate('/explore')}>
           Explorar
         </HeaderItem>
         {!isAuthenticated ?
