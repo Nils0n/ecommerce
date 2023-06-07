@@ -2,6 +2,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useContext, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
 import Loading from './components/Loading';
 import { auth, db } from './config/firebase.config';
 import { UserContext } from './contexts/UserContext';
@@ -46,6 +47,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />

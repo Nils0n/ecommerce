@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 
 import { LoginContainer, LoginHeadline, LoginInputContainer, LoginSubtitle, LoginContent } from './styles';
@@ -105,7 +104,7 @@ function LoginPage() {
 
   return (
     <>
-      <Header />
+
       {isLoading && <Loading />}
       <LoginContainer>
         <LoginContent>

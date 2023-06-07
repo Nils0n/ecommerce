@@ -9,7 +9,6 @@ import { addDoc, collection } from 'firebase/firestore';
 
 import CustomButton from '../../components/CustomButton';
 import CustomInput from '../../components/CustomInput';
-import Header from '../../components/Header';
 import InputErrorMessage from '../../components/InputErrorMessage';
 import Loading from '../../components/Loading';
 
@@ -93,7 +92,6 @@ function SignUpPage() {
 
   return (
     <>
-      <Header />
       {isLoading && <Loading />}
       <SignUpContainer>
         <SignUpContent>
