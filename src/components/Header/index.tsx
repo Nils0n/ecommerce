@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { BsCart3 } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../../config/firebase.config';
+import { CartContext } from '../../contexts/CartContext';
 import { UserContext } from '../../contexts/UserContext';
 import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './styles';
 
@@ -10,6 +11,7 @@ import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './styles'
 function Header() {
   const navigate = useNavigate();
   const { isAuthenticated } = useContext(UserContext);
+  const { toogleCart } = useContext(CartContext);
 
   return (
     <HeaderContainer>
@@ -34,7 +36,7 @@ function Header() {
             Sair
           </HeaderItem>
         }
-        <HeaderItem>
+        <HeaderItem onClick={toogleCart}>
           <BsCart3 size={25} />
           <p style={{ marginLeft: 5 }}>5</p>
         </HeaderItem>
