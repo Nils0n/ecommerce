@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import CartProductType from '../../types/cart.types';
 
 interface ICartContext {
@@ -12,7 +12,7 @@ interface CartContextProviderProps {
   children: ReactNode;
 }
 
-const CartContext = createContext<ICartContext>({
+export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
   toogleCart: () => { }
