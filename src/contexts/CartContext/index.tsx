@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { createContext, ReactNode, useState } from 'react';
-import CartProductType from '../../types/cart.types';
+import ICartProductType from '../../types/cart.types';
+import IProductType from '../../types/product.types';
 
 interface ICartContext {
   isVisible: boolean;
-  products: CartProductType[];
+  products: ICartProductType[];
   toogleCart: () => void;
+  addProductToCart: (product: IProductType) => void;
 }
 
 interface CartContextProviderProps {
@@ -15,20 +17,25 @@ interface CartContextProviderProps {
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
   products: [],
-  toogleCart: () => { }
+  toogleCart: () => { },
+  addProductToCart: () => { }
 });
 
 
 function CartContextProvider({ children }: CartContextProviderProps) {
   const [isVisible, setIsVisible] = useState(false);
-  const [products, setProducts] = useState<CartProductType[] | []>([]);
+  const [products, setProducts] = useState<ICartProductType[] | []>([]);
 
   function toogleCart() {
     setIsVisible((prevState) => !prevState);
   }
 
+  function addProductToCart(product: IProductType) {
+    setProducts(prevState => [...prevState, { ...product, quantity: 1 }]);
+  }
+
   return (
-    <CartContext.Provider value={{ isVisible, products, toogleCart }}>
+    <CartContext.Provider value={{ isVisible, products, toogleCart, addProductToCart }}>
       {children}
     </CartContext.Provider>
   );
