@@ -31,6 +31,14 @@ function CartContextProvider({ children }: CartContextProviderProps) {
   }
 
   function addProductToCart(product: IProductType) {
+    const productIsAlreadyInCart = products.some(item => item.id === product.id);
+
+    if (productIsAlreadyInCart) {
+      return setProducts(prevState =>
+        prevState.map(item => item.id === product.id ?
+          { ...item, quantity: ++item.quantity } : item));
+    }
+
     setProducts(prevState => [...prevState, { ...product, quantity: 1 }]);
   }
 
