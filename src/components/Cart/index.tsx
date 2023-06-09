@@ -19,7 +19,7 @@ function Cart() {
         {products.map(product => <CartItem key={product.id} product={product} />)}
 
         <CartTotal>
-          {productsCount === 0 ? <p>Seu carrinho está vazio!</p> :
+          {productsCount === 0 ? 'Seu carrinho está vazio!' :
             <>
               Total R$: {productsTotalPrice.toLocaleString('pt-br',
                 {
