@@ -6,7 +6,7 @@ import CustomButton from '../CustomButton';
 import { CartContainer, CartContent, CartEscapeArea, CartTitle, CartTotal } from './styles';
 
 function Cart() {
-  const { isVisible, toogleCart, products } = useContext(CartContext);
+  const { isVisible, toogleCart, products, productsTotalPrice } = useContext(CartContext);
 
   return (
     <CartContainer isVisible={isVisible}>
@@ -15,7 +15,14 @@ function Cart() {
 
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
-        <CartTotal>Total: R$250,00</CartTotal>
+        <CartTotal>
+          Total R$: {productsTotalPrice.toLocaleString('pt-br',
+            {
+              style: 'decimal',
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2
+            })}
+        </CartTotal>
 
         {products.map(product => <CartItem key={product.id} product={product} />)}
 

@@ -11,7 +11,7 @@ import { HeaderContainer, HeaderItem, HeaderItems, HeaderTitle } from './styles'
 function Header() {
   const navigate = useNavigate();
   const { isAuthenticated } = useContext(UserContext);
-  const { toogleCart, products } = useContext(CartContext);
+  const { toogleCart, productsCount } = useContext(CartContext);
 
   return (
     <HeaderContainer>
@@ -38,7 +38,7 @@ function Header() {
         }
         <HeaderItem onClick={toogleCart}>
           <BsCart3 size={25} />
-          <p style={{ marginLeft: 5 }}>{products.length}</p>
+          <p style={{ marginLeft: 5 }}>{productsCount}</p>
         </HeaderItem>
       </HeaderItems>
     </HeaderContainer>

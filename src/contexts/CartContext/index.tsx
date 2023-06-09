@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useMemo, useState } from 'react';
 import ICartProductType from '../../types/cart.types';
 import IProductType from '../../types/product.types';
 
 interface ICartContext {
   isVisible: boolean;
+  productsTotalPrice: number;
+  productsCount: number;
   products: ICartProductType[];
   toogleCart: () => void;
   addProductToCart: (product: IProductType) => void;
@@ -19,6 +21,8 @@ interface CartContextProviderProps {
 
 export const CartContext = createContext<ICartContext>({
   isVisible: false,
+  productsTotalPrice: 0,
+  productsCount: 0,
   products: [],
   toogleCart: () => { },
   addProductToCart: () => { },
@@ -31,6 +35,19 @@ export const CartContext = createContext<ICartContext>({
 function CartContextProvider({ children }: CartContextProviderProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [products, setProducts] = useState<ICartProductType[] | []>([]);
+
+  const productsTotalPrice = useMemo(() => {
+    return products.reduce((acc: number, currentProduct: ICartProductType) => {
+      return acc + currentProduct.price * currentProduct.quantity;
+    }, 0);
+  }, [products]);
+
+
+  const productsCount = useMemo(() => {
+    return products.reduce((acc: number, currentProduct: ICartProductType) => {
+      return acc + currentProduct.quantity;
+    }, 0);
+  }, [products]);
 
   function toogleCart() {
     setIsVisible((prevState) => !prevState);
@@ -69,6 +86,8 @@ function CartContextProvider({ children }: CartContextProviderProps) {
     <CartContext.Provider value={{
       isVisible,
       products,
+      productsTotalPrice,
+      productsCount,
       toogleCart,
       addProductToCart,
       removeProductFromCart,

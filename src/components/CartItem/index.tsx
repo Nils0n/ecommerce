@@ -18,7 +18,14 @@ function CartItem({ product }: CartItemProps) {
 
       <CartItemInfo>
         <p>{product.name}</p>
-        <p>{product.price}</p>
+        <p>
+          R$: {product.price.toLocaleString('pt-br',
+            {
+              style: 'decimal',
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 2
+            })}
+        </p>
 
         <CartItemQuantity>
           <AiOutlineMinus
