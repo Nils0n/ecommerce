@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, ReactNode, useMemo, useState } from 'react';
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import ICartProductType from '../../types/cart.types';
 import IProductType from '../../types/product.types';
 
@@ -35,6 +35,20 @@ export const CartContext = createContext<ICartContext>({
 function CartContextProvider({ children }: CartContextProviderProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [products, setProducts] = useState<ICartProductType[] | []>([]);
+
+  useEffect(() => {
+    const productsFromLocalStorage = JSON.parse(
+      localStorage.getItem('cartProducts')!
+    );
+
+    if (productsFromLocalStorage.length > 0) {
+      setProducts(productsFromLocalStorage);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartProducts', JSON.stringify(products));
+  }, [products]);
 
   const productsTotalPrice = useMemo(() => {
     return products.reduce((acc: number, currentProduct: ICartProductType) => {
@@ -81,6 +95,10 @@ function CartContextProvider({ children }: CartContextProviderProps) {
         { ...item, quantity: item.quantity - 1 } : item).filter(item => item.quantity > 0)
     );
   }
+
+
+
+
 
   return (
     <CartContext.Provider value={{
