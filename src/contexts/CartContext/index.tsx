@@ -38,16 +38,16 @@ function CartContextProvider({ children }: CartContextProviderProps) {
 
   useEffect(() => {
     const productsFromLocalStorage = JSON.parse(
-      localStorage.getItem('cartProducts')!
+      localStorage.getItem('@ClubCcartProducts')!
     );
 
-    if (productsFromLocalStorage.length > 0) {
+    if (productsFromLocalStorage?.length > 0) {
       setProducts(productsFromLocalStorage);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('cartProducts', JSON.stringify(products));
+    localStorage.setItem('@ClubCcartProducts', JSON.stringify(products));
   }, [products]);
 
   const productsTotalPrice = useMemo(() => {
