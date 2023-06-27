@@ -8,9 +8,10 @@ import Loading from './components/Loading';
 import { auth, db } from './config/firebase.config';
 import { UserContext } from './contexts/UserContext';
 import { UserConverter } from './converts/firestore.converts';
+
+import Checkout from './pages/Checkout';
 import Details from './pages/Details';
 import Explore from './pages/Explore';
-
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import SignUpPage from './pages/SignUp';
@@ -56,6 +57,7 @@ function App() {
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/category/:id' element={<Details />} />
+        <Route path='/checkout' element={<Checkout />} />
       </Routes>
     </BrowserRouter>
   );
