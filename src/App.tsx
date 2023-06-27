@@ -8,6 +8,7 @@ import Loading from './components/Loading';
 import { auth, db } from './config/firebase.config';
 import { UserContext } from './contexts/UserContext';
 import { UserConverter } from './converts/firestore.converts';
+import PrivateRoute from './guards/PrivateRoute';
 
 import Checkout from './pages/Checkout';
 import Details from './pages/Details';
@@ -57,7 +58,11 @@ function App() {
         <Route path='/sign-up' element={<SignUpPage />} />
         <Route path='/explore' element={<Explore />} />
         <Route path='/category/:id' element={<Details />} />
-        <Route path='/checkout' element={<Checkout />} />
+
+        <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path='/checkout' element={<Checkout />} />
+        </Route>
+
       </Routes>
     </BrowserRouter>
   );

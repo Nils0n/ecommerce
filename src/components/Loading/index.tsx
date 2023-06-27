@@ -1,9 +1,14 @@
-import { LoadingContainer } from './styles';
 import SyncLoader from 'react-spinners/SyncLoader';
+import { LoadingContainer } from './styles';
 
-function Loading() {
+interface ILoadingProps {
+  message?: string
+}
+
+function Loading({ message }: ILoadingProps) {
   return (
     <LoadingContainer>
+      {message && <><p>{message}</p></>}
       <SyncLoader size={30} />
     </LoadingContainer>
   );
